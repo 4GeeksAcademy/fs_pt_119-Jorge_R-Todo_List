@@ -13,9 +13,11 @@
 .list-group {
 
     text-align: left;
+    width: 100%;
 }
 
-.input {
+
+.PrimerValor {
 
     width: 100%;
 }

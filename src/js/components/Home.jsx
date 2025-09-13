@@ -1,40 +1,34 @@
 import React, { useState } from "react";
 
-//include images into your bundle
-import rigoImage from "../../img/rigo-baby.jpg";
-
-//create your first component - 
-
-// Necesitare 2 hoks (valor y actualizador)
 const Home = () => {
 	const [lista, setLista] = useState([])
 	const [tarea, setTarea] = useState("")
 
 	const agregaLista = (e) => {
-		// coger valor taera y lo añadir a usesstate lista
-		e.preventDefault()
 
+		e.preventDefault()
 		if (tarea.trim() === "") {
 			return;
 		}
 
 		setLista([...lista, tarea])
-		console.log([lista]);
 		setTarea("");
+	}
 
+	const borraLista = (index) => {
+
+		setLista(lista.filter((_, indexLista) => indexLista !== index));
 	}
 
 	const actulizaTarea = (valorInput) => {
-		// actulaizar la tarea
-		console.log(valorInput.target.value);
-		setTarea(valorInput.target.value)
 
+		setTarea(valorInput.target.value)
 	}
-	// hacer el formulario con  onsumbit en la etiqueta que abre
+
 	return (
 		<form
 			onSubmit={agregaLista}
-			className="">
+			className=" ">
 			<div className="card mx-auto">
 				<div className="card-body">
 					<h1>
@@ -46,30 +40,34 @@ const Home = () => {
 								onChange={actulizaTarea}
 								value={tarea}
 								type="text"
-								className="input border-0 shadow-none" />
+								className="PrimerValor input border-0 shadow-none"
+								placeholder="Agrega tu tarea..."
+							/>
 						</li>
-						{lista.length === 0
-							? <li className="list-group-item"></li>
-
-							: lista.map((item, index) => (
-								<li key={index} className="TareaHTML list-group-item">
+						{lista.length === 0 ? (
+							<li className="TareaHTML list-group-item"></li>
+						) : (
+							lista.map((item, index) => (
+								<li
+									key={index}
+									className="list-group-item d-flex justify-content-between align-items-center"
+								>
 									{item}
-									<button 
-									type="button" 
-									class="btn-close" 
-									data-bs-dismiss="TareaHTML" 
-									aria-label="Close">
-										
-									</button>
+
+									<button
+										type="button"
+										className="btn-close"
+										aria-label="Close"
+										onClick={() => borraLista(index)}
+									></button>
 								</li>
 							))
-						}
-						<li>
-							<div className="card-footer text-body-secondary">
-								 Tienes {lista.length} por hacer
-								
-							</div>
-						</li>
+						)}
+						<div className="card-footer text-body-secondary">
+
+							Tienes {lista.length} por hacer
+
+						</div>
 					</ul>
 				</div>
 			</div>
